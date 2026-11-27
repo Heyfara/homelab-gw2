@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\:
+        resource: '../src/'
+
+    # Construit depuis GW2_PROFILES (voir .env).
+    App\Profile\Profiles:
+        factory: ['App\Profile\Profiles', 'fromString']
+        arguments: ['%env(GW2_PROFILES)%']

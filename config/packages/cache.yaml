@@ -1,0 +1,16 @@
+framework:
+    cache:
+        prefix_seed: homelab/gw2
+
+# APCu : partagé par les workers PHP-FPM, en mémoire (prix et carnets en cache
+# 5 min). Pas en dev, pour que composer et bin/console tournent aussi dans une
+# image sans l'extension.
+when@prod:
+    framework:
+        cache:
+            app: cache.adapter.apcu
+
+when@test:
+    framework:
+        cache:
+            app: cache.adapter.array

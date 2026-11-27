@@ -1,0 +1,13 @@
+# see https://symfony.com/doc/current/reference/configuration/framework.html
+framework:
+    secret: '%env(APP_SECRET)%'
+    # API sans état : pas de session.
+    session: false
+
+    http_client:
+        default_options:
+            timeout: 10
+
+when@test:
+    framework:
+        test: true

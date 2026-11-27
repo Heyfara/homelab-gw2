@@ -1,0 +1,37 @@
+# Environnement de développement. La prod est décrite par le rôle Ansible
+# service-gw2 (homelab-ansible). Commandes : voir Makefile ; mise en route :
+# docs/developpement.md. Ports décalés (8081, 5174) pour tourner à côté du
+# dev de homelab-dashboard.
+services:
+  gw2:
+    build:
+      context: .
+      target: dev
+    user: "${UID:-1000}:${GID:-1000}"
+    environment:
+      COMPOSER_HOME: /tmp/composer
+    volumes:
+      - .:/app
+
+  nginx:
+    image: nginx:1.30.3-alpine
+    depends_on: [gw2]
+    ports:
+      - "8081:80"
+    volumes:
+      # Dossiers montés, pas les fichiers seuls : un éditeur qui enregistre
+      # par renommage laisserait l'ancien fichier au container.
+      - ./docker/nginx:/etc/nginx/conf.d:ro
+      - ./public:/app/public:ro
+
+  node:
+    image: node:24.16.0-alpine
+    user: "${UID:-1000}:${GID:-1000}"
+    working_dir: /app
+    command: sh -c "npm ci && npm run dev"
+    environment:
+      VITE_API_PROXY: http://nginx
+    ports:
+      - "5174:5174"
+    volumes:
+      - .:/app
