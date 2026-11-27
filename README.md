@@ -2,7 +2,7 @@
 
 Guild Wars 2 : rentabilité des promotions de matériaux à la Forge mystique (vendre, promouvoir ou enchaîner deux promotions), à partir du stock du compte, des prix du comptoir et de rendements mesurés.
 
-Servi sur `gw2.home` dans le homelab. Spécification : [docs/spec.md](docs/spec.md).
+Servi sur `gw2.home` dans le homelab. Spécification : [docs/spec.md](docs/spec.md). Développement : [docs/developpement.md](docs/developpement.md).
 
 ## Sources de données
 
